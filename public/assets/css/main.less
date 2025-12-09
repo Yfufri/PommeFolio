@@ -1,70 +1,131 @@
 /* public/assets/css/main.less */
 
 /* ===============================
-   Variables & palette
+   Palette principale
    =============================== */
 
-@color-bg-light: #0f172a;
-@color-bg-dark:  #020617;
-@color-accent-1: #6366f1;
-@color-accent-2: #ec4899;
-@color-accent-3: #22c55e;
-@color-text-main: #e5e7eb;
-@color-text-muted: #9ca3af;
+/* Couleur de fond claire (haut du gradient global) */
+@color-bg-light: #c7ebf8; // bleu clair inspiré de ton CV
+
+@color-bg-light2: #e1ebf4;
+
+  /* Couleur de fond sombre (bas du gradient global + dark mode) */
+@color-bg-dark: #03081c; // bleu nuit très sombre
+
+/* Couleurs d'accent (boutons, gradients, tags) */
+@color-accent-1: #6366f1; // indigo / bleu violet (accent principal)
+@color-accent-2: #ec4899; // rose (accent secondaire)
+@color-accent-3: #22c55e; // vert (succès / validation)
+
+/* Couleurs de texte */
+@color-text-main: #e5e7eb; // texte principal clair
+@color-text-muted: #9ca3af; // texte secondaire / muted
+
+/* Bordures douces (cartes, champs, etc.) */
 @color-border-soft: rgba(148, 163, 184, 0.4);
 
-@gradient-hero:        linear-gradient(135deg, @color-accent-1, @color-accent-2);
-@gradient-card:        linear-gradient(135deg, rgba(99,102,241,0.3), rgba(236,72,153,0.25));
-@gradient-card-alt:    linear-gradient(135deg, rgba(34,197,94,0.3), rgba(56,189,248,0.25));
 
-@shadow-soft:  0 18px 45px rgba(15, 23, 42, 0.75);
-@shadow-hover: 0 22px 60px rgba(15, 23, 42, 0.95);
+/* ===============================
+   Gradients & ombres
+   =============================== */
 
-@dur-fast:   0.15s;
+/* Gradient utilisé pour les gros boutons / éléments principaux */
+@gradient-hero: linear-gradient(135deg, @color-accent-1, @color-accent-2);
+
+/* Gradient d’arrière-plan pour les cartes "classiques" */
+@gradient-card: linear-gradient(135deg,
+fade(@color-accent-1, 30%),
+fade(@color-accent-2, 25%));
+
+/* Gradient alternatif pour d’autres cartes (culture, etc.) */
+@gradient-card-alt: linear-gradient(135deg,
+fade(@color-accent-3, 30%),
+fade(#38bdf8, 25%) // bleu clair dérivé pour varier
+);
+
+/* Ombres globales pour les cartes / blocs */
+@shadow-soft: 0 18px 45px fade(@color-bg-dark, 75%);
+@shadow-hover: 0 22px 60px fade(@color-bg-dark, 95%);
+
+
+/* ===============================
+   Backgrounds globaux
+   =============================== */
+
+/* Fond général du site (thème clair) */
+@bg-body: radial-gradient(circle at top,
+@color-bg-light 0,
+@color-bg-light2 45%);
+
+/* Fond général en dark mode (body.dark) */
+@bg-body-dark: radial-gradient(circle at top,
+@color-bg-dark 0,
+#000000 90%);
+
+/* Halo coloré derrière le hero de la home */
+@bg-hero: radial-gradient(circle at 0% 0%, fade(@color-accent-1, 60%) 0, transparent 55%),
+radial-gradient(circle at 100% 0%, fade(@color-accent-2, 50%) 0, transparent 55%),
+radial-gradient(circle at 50% 120%, fade(@color-accent-3, 35%) 0, transparent 60%);
+
+
+/* ===============================
+   Durées / easing
+   =============================== */
+
+@dur-fast: 0.15s;
 @dur-normal: 0.25s;
-@dur-slow:   0.4s;
+@dur-slow: 0.4s;
 @ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
 
 /* ===============================
    Thème / dark mode (body.dark)
    =============================== */
 
 body {
-  background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
+  background: @bg-body;//test
   color: @color-text-main;
 }
 
 :root {
-  --bg-surface:       rgba(15, 23, 42, 0.9);
-  --bg-surface-soft:  rgba(15, 23, 42, 0.8);
-  --text-main:        @color-text-main;
-  --text-muted:       @color-text-muted;
+  /* Surfaces principales (cartes, header, etc.) */
+  --bg-surface: rgba(15, 23, 42, 0.9);
+  --bg-surface-soft: rgba(15, 23, 42, 0.8);
+
+  /* Couleurs de texte "logiques" */
+  --text-main: @color-text-main;
+  --text-muted: @color-text-muted;
 }
 
 body.dark {
-  --bg-surface:       rgba(15, 23, 42, 0.97);
-  --bg-surface-soft:  rgba(15, 23, 42, 0.9);
-  --text-main:        #f9fafb;
-  --text-muted:       #9ca3af;
-  background: radial-gradient(circle at top, #020617 0, #000 60%);
+  --bg-surface: rgba(15, 23, 42, 0.97);
+  --bg-surface-soft: rgba(15, 23, 42, 0.9);
+  --text-main: #f9fafb;
+  --text-muted: @color-text-muted;
+  background: @bg-body-dark;
 }
+
 
 /* ===============================
    Mixins
    =============================== */
 
+/* Applique le gradient principal (boutons, logo, etc.) */
 .gradient-hero() {
   background: @gradient-hero;
 }
 
+/* Gradient pour les cartes */
 .gradient-card() {
   background: @gradient-card;
 }
 
+/* Gradient alternatif pour d’autres cartes */
 .gradient-card-alt() {
   background: @gradient-card-alt;
 }
 
+/* Surface floutée / glassmorphism pour cartes, header, etc. */
 .surface-blur() {
   background: var(--bg-surface);
   backdrop-filter: blur(18px);
@@ -72,12 +133,12 @@ body.dark {
   border: 1px solid @color-border-soft;
 }
 
+/* Hover "lift" réutilisable (cartes, boutons, etc.) */
 .hover-lift() {
-  transition:
-          transform @dur-normal @ease-smooth,
-          box-shadow @dur-normal @ease-smooth,
-          border-color @dur-normal @ease-smooth,
-          background @dur-slow @ease-smooth;
+  transition: transform @dur-normal @ease-smooth,
+  box-shadow @dur-normal @ease-smooth,
+  border-color @dur-normal @ease-smooth,
+  background @dur-slow @ease-smooth;
   will-change: transform, box-shadow, background;
 
   &:hover {
@@ -86,8 +147,9 @@ body.dark {
   }
 }
 
+
 /* ===============================
-   Reset basique
+   Reset basique & typographie
    =============================== */
 
 *,
@@ -101,14 +163,11 @@ html, body {
   padding: 0;
 }
 
-/* ===============================
-   Typo / corps
-   =============================== */
-
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
   color: var(--text-main);
 }
+
 
 /* ===============================
    Header / nav
@@ -209,10 +268,11 @@ body {
   padding: 0.3rem 0.9rem;
   border-radius: 999px;
   .gradient-card();
-  border: 1px solid rgba(148, 163, 184, 0.5);
+  border: 1px solid fade(@color-border-soft, 80%);
   box-shadow: @shadow-soft;
   .hover-lift();
 }
+
 
 /* ===============================
    Switch dark mode
@@ -227,16 +287,15 @@ body {
   width: 60px;
   height: 30px;
   border-radius: 999px;
-  background: linear-gradient(135deg, #0f172a, #020617);
-  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: linear-gradient(135deg, @color-bg-dark, darken(@color-bg-dark, 10%));
+  border: 1px solid fade(@color-border-soft, 70%);
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
   padding: 2px;
-  transition:
-          background @dur-slow @ease-smooth,
-          box-shadow @dur-normal @ease-smooth;
+  transition: background @dur-slow @ease-smooth,
+  box-shadow @dur-normal @ease-smooth;
   box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.0);
 
   .darkmode-knob {
@@ -245,7 +304,7 @@ body {
     width: 24px;
     height: 24px;
     border-radius: 999px;
-    background: @gradient-hero;
+    .gradient-hero();
     box-shadow: @shadow-soft;
     transition: transform @dur-normal @ease-smooth;
   }
@@ -265,14 +324,15 @@ body {
   }
 
   &.is-on {
-    background: linear-gradient(135deg, #020617, #111827);
-    box-shadow: 0 0 0 8px rgba(129, 140, 248, 0.25);
+    background: linear-gradient(135deg, darken(@color-bg-dark, 5%), #111827);
+    box-shadow: 0 0 0 8px fade(@color-accent-1, 25%);
 
     .darkmode-knob {
       transform: translateX(30px);
     }
   }
 }
+
 
 /* ===============================
    Footer
@@ -287,9 +347,10 @@ body {
 .footer-inner {
   max-width: 1100px;
   margin: 0 auto;
-  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  border-top: 1px solid fade(@color-border-soft, 70%);
   padding-top: 1rem;
 }
+
 
 /* ===============================
    Layout des pages
@@ -299,6 +360,7 @@ body {
   min-height: calc(100vh - 140px);
   padding: 2.5rem 2.5rem 3rem;
 }
+
 
 /* ===============================
    Home
@@ -319,10 +381,7 @@ body {
   .hero-gradient {
     position: absolute;
     inset: -40%;
-    background:
-            radial-gradient(circle at 0% 0%, rgba(129, 140, 248, 0.6) 0, transparent 55%),
-            radial-gradient(circle at 100% 0%, rgba(236, 72, 153, 0.5) 0, transparent 55%),
-            radial-gradient(circle at 50% 120%, rgba(34, 197, 94, 0.35) 0, transparent 60%);
+    background: @bg-hero;
     opacity: 0.7;
     filter: blur(20px);
     pointer-events: none;
@@ -369,6 +428,7 @@ body {
   }
 }
 
+
 /* ===============================
    Boutons
    =============================== */
@@ -396,7 +456,7 @@ body {
 .btn-secondary {
   .gradient-card-alt();
   color: #e5e7eb;
-  border: 1px solid rgba(148, 163, 184, 0.4);
+  border: 1px solid fade(@color-border-soft, 60%);
 }
 
 .btn-link {
@@ -414,6 +474,7 @@ body {
   background: linear-gradient(135deg, #ef4444, #b91c1c);
   color: #fee2e2;
 }
+
 
 /* ===============================
    Cartes / blocs
@@ -456,8 +517,9 @@ body {
   margin-top: 0;
 }
 
+
 /* ===============================
-    BUT / AC
+   BUT / AC
    =============================== */
 
 .breadcrumb {
@@ -496,7 +558,7 @@ body {
 .illu-video {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid rgba(148, 163, 184, 0.4);
+  border: 1px solid fade(@color-border-soft, 60%);
 }
 
 .acs-section {
@@ -541,6 +603,7 @@ body {
   border-radius: 10px;
 }
 
+
 /* ===============================
    Culture
    =============================== */
@@ -566,6 +629,7 @@ body {
   color: var(--text-muted);
 }
 
+
 /* ===============================
    Admin : table / forms
    =============================== */
@@ -584,7 +648,7 @@ body {
 .table th,
 .table td {
   padding: 0.65rem 0.75rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  border-bottom: 1px solid fade(@color-border-soft, 60%);
 }
 
 .table-row-hover {
@@ -622,7 +686,7 @@ body {
   width: 100%;
   padding: 0.55rem 0.65rem;
   border-radius: 10px;
-  border: 1px solid rgba(148, 163, 184, 0.6);
+  border: 1px solid fade(@color-border-soft, 70%);
   background: var(--bg-surface-soft);
   color: var(--text-main);
   outline: none;
@@ -630,9 +694,10 @@ body {
 
   &:focus {
     border-color: @color-accent-1;
-    box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.5);
+    box-shadow: 0 0 0 2px fade(@color-accent-1, 50%);
   }
 }
+
 
 /* Login */
 
@@ -661,6 +726,7 @@ body {
   margin-bottom: 0.8rem;
 }
 
+
 /* ===============================
    Pages d’erreur
    =============================== */
@@ -674,6 +740,7 @@ body {
   .surface-blur();
   box-shadow: @shadow-soft;
 }
+
 
 /* ===============================
    Responsive

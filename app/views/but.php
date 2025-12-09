@@ -2,9 +2,9 @@
 <?php require __DIR__ . '/partials/header.php'; ?>
 <main class="page page-but">
     <section class="breadcrumb">
-        <a href="../../index.php">Accueil</a>
+        <a href="home">Accueil</a>
         <span>›</span>
-        <a href="../../index.php">BUT Informatique</a>
+        <a href="home">BUT Informatique</a>
         <?php if (!empty($annee)): ?>
             <span>›</span><span><?= htmlspecialchars($annee['label']) ?></span>
         <?php endif; ?>

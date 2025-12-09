@@ -1,21 +1,15 @@
-# public/.htaccess
-
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteBase /pommefolio/
 
-    # Chemin de base à adapter si ton projet n'est pas à la racine du vhost
-    # Exemple : si ton projet est dans /portfolio-butinformatique/public
-    # RewriteBase /portfolio-butinformatique/public/
-
-    # Ne pas réécrire les fichiers ou dossiers existants
+    # Ne pas réécrire les fichiers/dossiers physiques
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
-    # URL racine → action=home
+    # Racine -> home
     RewriteRule ^$ index.php?action=home [QSA,L]
 
-    # Routes simples (home, but, culture, login, admin, etc.)
     RewriteRule ^home$                 index.php?action=home               [QSA,L]
     RewriteRule ^but$                  index.php?action=but                [QSA,L]
     RewriteRule ^but/competence$       index.php?action=but-competence     [QSA,L]

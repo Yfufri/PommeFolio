@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 <header class="site-header">
     <div class="header-inner">
-        <a href="/home" class="logo">
+        <a href="home" class="logo">
             <div class="logo-icon">
                 <!-- future logo pomme -->
                 <span class="logo-pomme">🍏</span>
@@ -17,12 +17,12 @@ if (session_status() === PHP_SESSION_NONE) {
         </a>
 
         <nav class="main-nav">
-            <a href="/home" class="nav-link">Accueil</a>
-            <a href="/but" class="nav-link">BUT Informatique</a>
-            <a href="/culture" class="nav-link">Culture générale</a>
+            <a href="home" class="nav-link">Accueil</a>
+            <a href="but" class="nav-link">BUT Informatique</a>
+            <a href="culture" class="nav-link">Culture générale</a>
 
             <?php if (!empty($_SESSION['user_id'])): ?>
-                <a href="/admin" class="nav-link nav-link-panel">Panel</a>
+                <a href="admin" class="nav-link nav-link-panel">Panel</a>
             <?php endif; ?>
         </nav>
 
