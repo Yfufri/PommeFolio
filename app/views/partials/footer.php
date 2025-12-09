@@ -5,3 +5,8 @@
         <p>Portfolio développé en HTML / CSS (LESS) / PHP / VueJS.</p>
     </div>
 </footer>
+</div>
+
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

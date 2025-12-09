@@ -1,8 +1,8 @@
 <?php
 // public/index.php
 
-require __DIR__ . '/../app/controllers/BaseController.php';
-// require des autres controllers + modèles...
+require __DIR__ . '/app/controllers/BaseController.php';
+require __DIR__ . '/app/controllers/HomeController.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'home';
 

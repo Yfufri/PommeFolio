@@ -1,0 +1,46 @@
+# public/.htaccess
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Chemin de base à adapter si ton projet n'est pas à la racine du vhost
+    # Exemple : si ton projet est dans /portfolio-butinformatique/public
+    # RewriteBase /portfolio-butinformatique/public/
+
+    # Ne pas réécrire les fichiers ou dossiers existants
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # URL racine → action=home
+    RewriteRule ^$ index.php?action=home [QSA,L]
+
+    # Routes simples (home, but, culture, login, admin, etc.)
+    RewriteRule ^home$                 index.php?action=home               [QSA,L]
+    RewriteRule ^but$                  index.php?action=but                [QSA,L]
+    RewriteRule ^but/competence$       index.php?action=but-competence     [QSA,L]
+    RewriteRule ^culture$              index.php?action=culture            [QSA,L]
+
+    RewriteRule ^login$                index.php?action=login              [QSA,L]
+    RewriteRule ^login/submit$         index.php?action=login-submit       [QSA,L]
+    RewriteRule ^logout$               index.php?action=logout             [QSA,L]
+
+    RewriteRule ^admin$                        index.php?action=admin                         [QSA,L]
+    RewriteRule ^admin/competences$            index.php?action=admin-competences             [QSA,L]
+    RewriteRule ^admin/competences/create$     index.php?action=admin-competences-create      [QSA,L]
+    RewriteRule ^admin/competences/store$      index.php?action=admin-competences-store       [QSA,L]
+    RewriteRule ^admin/competences/edit$       index.php?action=admin-competences-edit        [QSA,L]
+    RewriteRule ^admin/competences/update$     index.php?action=admin-competences-update      [QSA,L]
+    RewriteRule ^admin/competences/delete$     index.php?action=admin-competences-delete      [QSA,L]
+    RewriteRule ^admin/competences/manage$     index.php?action=admin-competences-manage      [QSA,L]
+
+    RewriteRule ^admin/ac/create$              index.php?action=admin-ac-create               [QSA,L]
+    RewriteRule ^admin/ac/store$               index.php?action=admin-ac-store                [QSA,L]
+    RewriteRule ^admin/ac/edit$                index.php?action=admin-ac-edit                 [QSA,L]
+    RewriteRule ^admin/ac/update$              index.php?action=admin-ac-update               [QSA,L]
+    RewriteRule ^admin/ac/delete$              index.php?action=admin-ac-delete               [QSA,L]
+
+    RewriteRule ^admin/illustrations$          index.php?action=admin-illustrations           [QSA,L]
+    RewriteRule ^admin/illustrations/store$    index.php?action=admin-illustrations-store     [QSA,L]
+    RewriteRule ^admin/illustrations/delete$   index.php?action=admin-illustrations-delete    [QSA,L]
+</IfModule>

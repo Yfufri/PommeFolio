@@ -15,35 +15,26 @@ class ButController extends BaseController
         $this->illustrationModel = new Illustration();
     }
 
-    // /but  → liste des années + compétences
+    // /but → page explorateur interactif
     public function index()
     {
+        // années + compétences
         $annees = $this->anneeModel->getAllWithCompetences();
-        $this->render('but-list', [
-            'annees' => $annees,
-        ]);
-    }
 
-    // /but/annee?id=1  (facultatif, si tu veux une page par année)
-    public function byYear()
-    {
-        $anneeId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-        $annee   = $this->anneeModel->findById($anneeId);
-
-        if (!$annee) {
-            (new ErrorController())->notFound();
-            return;
+        // pour chaque compétence, récupérer les AC
+        $acsParCompetence = [];
+        foreach ($annees as $annee) {
+            foreach ($annee['competences'] as $comp) {
+                $acsParCompetence[$comp['id']] = $this->acModel->findByCompetence($comp['id']);
+            }
         }
 
-        $competences = $this->competenceModel->findByAnnee($anneeId);
-
-        $this->render('but-year', [
-            'annee'       => $annee,
-            'competences' => $competences,
+        $this->render('but-list', [
+            'annees'           => $annees,
+            'acsParCompetence' => $acsParCompetence,
         ]);
     }
 
-    // /but/competence?id=xx  → page détaillée (ce qu’on a appelé views/but.php)
     public function competence()
     {
         $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
