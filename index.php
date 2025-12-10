@@ -5,13 +5,19 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 
-require __DIR__ . '/app/controllers/BaseController.php';
-require __DIR__ . '/app/controllers/HomeController.php';
-require __DIR__ . '/app/controllers/AdminController.php';
-require __DIR__ . '/app/controllers/AuthController.php';
-require __DIR__ . '/app/controllers/ButController.php';
-require __DIR__ . '/app/controllers/ErrorController.php';
-require __DIR__ . '/app/controllers/CultureController.php';
+spl_autoload_register(function ($class) {
+    $paths = [
+        __DIR__ . '/app/controllers/' . $class . '.php',
+        __DIR__ . '/app/models/' . $class . '.php',
+    ];
+
+    foreach ($paths as $path) {
+        if (file_exists($path)) {
+            require_once $path;
+            return;
+        }
+    }
+});
 
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'home';
