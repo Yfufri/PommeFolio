@@ -629,6 +629,39 @@ body {
   color: var(--text-muted);
 }
 
+.culture-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.culture-image {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: contain;
+    background: #00000000;
+    border-radius: 12px;
+    border: 1px solid fade(@color-border-soft, 60%);
+}
+
+.culture-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.culture-link {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: @color-accent-1;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+    color: @color-accent-2;
+  }
+}
 
 /* ===============================
    Admin : table / forms
