@@ -3,6 +3,12 @@
 
 require __DIR__ . '/app/controllers/BaseController.php';
 require __DIR__ . '/app/controllers/HomeController.php';
+require __DIR__ . '/app/controllers/AdminController.php';
+require __DIR__ . '/app/controllers/AuthController.php';
+require __DIR__ . '/app/controllers/ButController.php';
+require __DIR__ . '/app/controllers/ErrorController.php';
+require __DIR__ . '/app/controllers/CultureController.php';
+
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'home';
 

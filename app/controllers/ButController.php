@@ -1,11 +1,18 @@
 <?php
+// app/controllers/ButController.php
+
+require_once __DIR__ . 'BaseController.php';
+require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/Competence.php';
+require_once __DIR__ . '/../models/Ac.php';
+require_once __DIR__ . '/../models/Illustration.php';
 
 class ButController extends BaseController
 {
-    private Competence $competenceModel;
-    private Annee $anneeModel;
-    private Ac $acModel;
-    private Illustration $illustrationModel;
+    private $competenceModel;
+    private $anneeModel;
+    private $acModel;
+    private $illustrationModel;
 
     public function __construct()
     {
@@ -15,33 +22,54 @@ class ButController extends BaseController
         $this->illustrationModel = new Illustration();
     }
 
-    // /but → page explorateur interactif
+    /**
+     * /but
+     * Page explorateur interactif BUT (VueJS) :
+     *  - liste des années
+     *  - compétences par année
+     *  - AC par compétence
+     */
     public function index()
     {
         // années + compétences
         $annees = $this->anneeModel->getAllWithCompetences();
 
-        // pour chaque compétence, récupérer les AC
-        $acsParCompetence = [];
+        // AC groupées par compétence
+        $acsParCompetence = array();
         foreach ($annees as $annee) {
-            foreach ($annee['competences'] as $comp) {
-                $acsParCompetence[$comp['id']] = $this->acModel->findByCompetence($comp['id']);
+            if (!empty($annee['competences'])) {
+                foreach ($annee['competences'] as $comp) {
+                    $acsParCompetence[$comp['id']] = $this->acModel->findByCompetence($comp['id']);
+                }
             }
         }
 
-        $this->render('but-list', [
+        $this->render('but-list', array(
             'annees'           => $annees,
             'acsParCompetence' => $acsParCompetence,
-        ]);
+        ));
     }
 
+    /**
+     * /but/competence?id=XX
+     * Page détaillée d’une compétence :
+     *  - infos compétence
+     *  - AC
+     *  - illustrations globales et par AC
+     */
     public function competence()
     {
         $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-        $competence = $this->competenceModel->findById($id);
+        if ($id <= 0) {
+            $error = new ErrorController();
+            $error->notFound();
+            return;
+        }
 
+        $competence = $this->competenceModel->findById($id);
         if (!$competence) {
-            (new ErrorController())->notFound();
+            $error = new ErrorController();
+            $error->notFound();
             return;
         }
 
@@ -51,12 +79,12 @@ class ButController extends BaseController
         $illustrationsGlobales = $this->illustrationModel->findGlobalByCompetence($id);
         $illustrationsParAc    = $this->illustrationModel->findGroupedByAcForCompetence($id);
 
-        $this->render('but', [
-            'annee'               => $annee,
-            'competence'          => $competence,
-            'acs'                 => $acs,
+        $this->render('but', array(
+            'annee'                 => $annee,
+            'competence'            => $competence,
+            'acs'                   => $acs,
             'illustrationsGlobales' => $illustrationsGlobales,
-            'illustrationsParAc'  => $illustrationsParAc,
-        ]);
+            'illustrationsParAc'    => $illustrationsParAc,
+        ));
     }
 }
