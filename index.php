@@ -1,5 +1,9 @@
 <?php
-// public/index.php
+require __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 
 require __DIR__ . '/app/controllers/BaseController.php';
 require __DIR__ . '/app/controllers/HomeController.php';

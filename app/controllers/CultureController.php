@@ -1,5 +1,6 @@
 <?php
-
+require_once __DIR__ . '/BaseController.php';
+require_once __DIR__ . '/../models/Culture.php';
 class CultureController extends BaseController
 {
     private Culture $cultureModel;

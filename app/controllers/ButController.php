@@ -1,8 +1,8 @@
 <?php
 // app/controllers/ButController.php
 
-require_once __DIR__ . 'BaseController.php';
-require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/BaseController.php';
+require_once __DIR__ . '/../models/Annee.php';
 require_once __DIR__ . '/../models/Competence.php';
 require_once __DIR__ . '/../models/Ac.php';
 require_once __DIR__ . '/../models/Illustration.php';
