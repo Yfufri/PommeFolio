@@ -11,22 +11,25 @@
 
     <section class="culture-grid">
         <?php foreach ($itemsCulture as $item): ?>
-            <article class="culture-card">
-                <div class="culture-tag"><?= htmlspecialchars($item['type']) ?></div>
-                <h2><?= htmlspecialchars($item['titre']) ?></h2>
-                <?php if (!empty($item['date'])): ?>
-                    <p class="culture-date"><?= htmlspecialchars($item['date']) ?></p>
+            <div class="culture-card">
+                <?php if (!empty($item['image'])): ?>
+                    <img src="<?= htmlspecialchars($item['image']) ?>" alt="" class="culture-image">
                 <?php endif; ?>
-                <p class="culture-description">
-                    <?= nl2br(htmlspecialchars($item['description'])) ?>
-                </p>
 
-                <?php if (!empty($item['lien'])): ?>
-                    <a href="<?= htmlspecialchars($item['lien']) ?>" target="_blank" class="card-link">
-                        En savoir plus →
-                    </a>
-                <?php endif; ?>
-            </article>
+                <div class="culture-content">
+                    <div class="culture-tag"><?= htmlspecialchars($item['type']) ?></div>
+                    <h3><?= htmlspecialchars($item['titre']) ?></h3>
+                    <p class="culture-date"><?= htmlspecialchars($item['date_evenement']) ?></p>
+                    <p><?= nl2br(htmlspecialchars($item['description'])) ?></p>
+
+                    <?php if (!empty($item['lien'])): ?>
+                        <a href="<?= htmlspecialchars($item['lien']) ?>" class="culture-link" target="_blank">
+                            Voir plus →
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+
         <?php endforeach; ?>
     </section>
 </main>
