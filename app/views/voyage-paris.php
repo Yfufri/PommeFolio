@@ -36,7 +36,7 @@
             </figure>
             <figure class="voyage-paris-item">
                 <img src="uploads/culture/louvre.png" alt="Louvre"/>
-                <figcaption>Dans l’après-midi, notre parcours nous a conduits à travers des monuments célèbres : nous
+                <figcaption>Dans l’après-midi, notre parcours nous a conduit à travers des monuments célèbres : nous
                     sommes passés devant la cathédrale Notre-Dame, puis le célèbre musée du Louvre.
                 </figcaption>
             </figure>

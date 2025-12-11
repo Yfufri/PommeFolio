@@ -104,7 +104,7 @@ VALUES ('Sport',
         'Entrainement de handball tout les mardis soirs avec le SUAPS de l/université.',
         '2025-12-10',
         'https://mon-ent-etudiant.univ-lemans.fr/_resource/Ca-bouge/Planning%20des%20activit%C3%A9s%20SUAPS%20Laval.pdf',
-        'uploads/culture/la-peste.png');
+        'uploads/culture/Handball.jpg');
 
 INSERT INTO culture_items (type, titre, description, date_evenement, lien, image)
 VALUES ('Voyage',
@@ -129,3 +129,11 @@ Ce projet a été entièrement autofinancé grâce à un emploi en restauration 
         '2025-12-10',
         'uploads/culture/moto.PNG');
 
+INSERT INTO culture_items (type, titre, description, date_evenement, lien, image)
+VALUES ('Certification',
+        'Ecri+',
+        'écri+ est un dispositif public de formation et de certification
+des compétences en expression et compréhension écrites du français.',
+        '2025-12-10',
+        'https://ecriplus.fr/',
+        'uploads/culture/ecri.png');
