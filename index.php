@@ -28,6 +28,11 @@ switch ($action) {
         (new HomeController())->index();
         break;
 
+    case 'voyage-paris':
+        $controller = new CultureController();
+        $controller->voyageParis();
+        break;
+
     case 'but':
         (new ButController())->index();
         break;

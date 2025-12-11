@@ -18,4 +18,9 @@ class CultureController extends BaseController
             'itemsCulture' => $itemsCulture,
         ]);
     }
+
+    public function voyageParis()
+    {
+        $this->render('voyage-paris');
+    }
 }

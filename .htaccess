@@ -37,4 +37,7 @@
     RewriteRule ^admin/illustrations$          index.php?action=admin-illustrations           [QSA,L]
     RewriteRule ^admin/illustrations/store$    index.php?action=admin-illustrations-store     [QSA,L]
     RewriteRule ^admin/illustrations/delete$   index.php?action=admin-illustrations-delete    [QSA,L]
+
+    RewriteRule ^voyage-paris$      index.php?action=voyage-paris [QSA,L]
+
 </IfModule>
