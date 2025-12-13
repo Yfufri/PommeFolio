@@ -7,8 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="header-inner">
         <a href="home" class="logo">
             <div class="logo-icon">
-                <!-- future logo pomme -->
-                <span class="logo-pomme">🍏</span>
+                <span class="logo-pomme"><img src="public/assets/img/pome.png" alt="🍏"> </span>
             </div>
             <div class="logo-text">
                 <span class="logo-name">Théo Lannier</span>
