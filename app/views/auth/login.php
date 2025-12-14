@@ -1,3 +1,4 @@
+<?php require __DIR__ . "/../partials/layout_head.php"; ?>
 <?php require __DIR__ . '/../partials/header.php'; ?>
 <main class="page page-login">
     <section class="login-card">
@@ -7,11 +8,7 @@
             <p class="login-error"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
 
-        <form action="/login" method="post" class="form">
-            <div class="form-group">
-                <label for="username">Identifiant</label>
-                <input type="text" id="username" name="username" required autocomplete="username">
-            </div>
+        <form action="login/submit" method="post" class="form">
 
             <div class="form-group">
                 <label for="password">Mot de passe</label>

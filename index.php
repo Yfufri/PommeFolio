@@ -20,7 +20,7 @@ spl_autoload_register(function ($class) {
 });
 
 
-$action = isset($_GET['action']) ? $_GET['action'] : 'home';
+$action = $_GET['action'] ?? 'home';
 
 // mapping simple action -> contrôleur/méthode
 switch ($action) {
