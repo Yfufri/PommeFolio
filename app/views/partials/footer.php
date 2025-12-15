@@ -7,6 +7,6 @@
 </footer>
 </div>
 
-<script src="public/assets/js/app.js"></script>
+<script src="/pommefolio/public/assets/js/app.js"></script>
 </body>
 </html>

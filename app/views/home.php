@@ -1,6 +1,6 @@
 <?php require __DIR__ . "/partials/layout_head.php"; ?>
 <?php require __DIR__ . '/partials/header.php'; ?>
-<main class="page page-home">
+<main class="page page-home">s
     <section class="hero">
         <div class="hero-gradient"></div>
         <div class="hero-content">
@@ -13,8 +13,8 @@
                 à travers une interface fluide, animée et agréable à explorer.
             </p>
             <div class="hero-buttons">
-                <a href="but" class="btn btn-primary">BUT Informatique</a>
-                <a href="culture" class="btn btn-secondary">Culture générale</a>
+                <a href="/pommefolio/but" class="btn btn-primary">BUT Informatique</a>
+                <a href="/pommefolio/culture" class="btn btn-secondary">Culture générale</a>
             </div>
         </div>
     </section>
@@ -27,7 +27,7 @@
                 Parcours complet de ma première année : compétences, AC, projets et illustrations
                 (captures de code, PDF, vidéos).
             </p>
-            <a href="but" class="card-link">Explorer les compétences →</a>
+            <a href="/pommefolio/but" class="card-link">Explorer les compétences →</a>
         </article>
 
         <article class="card card-big">
@@ -36,7 +36,7 @@
             <p>
                 Voyages, lectures, permis moto et autres expériences qui complètent mon profil.
             </p>
-            <a href="culture" class="card-link">Découvrir ma culture →</a>
+            <a href="/pommefolio/culture" class="card-link">Découvrir ma culture →</a>
         </article>
     </section>
 </main>

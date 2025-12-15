@@ -5,9 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 <header class="site-header">
     <div class="header-inner">
-        <a href="home" class="logo">
+        <a href="/pommefolio/home" class="logo">
             <div class="logo-icon">
-                <span class="logo-pomme"><img src="public/assets/img/pome.png" alt="🍏"> </span>
+                <span class="logo-pomme"><img src="/pommefolio/public/assets/img/pome.png" alt="🍏"> </span>
             </div>
             <div class="logo-text">
                 <span class="logo-name">Théo Lannier</span>
@@ -16,12 +16,12 @@ if (session_status() === PHP_SESSION_NONE) {
         </a>
 
         <nav class="main-nav">
-            <a href="home" class="nav-link">Accueil</a>
-            <a href="but" class="nav-link">BUT Informatique</a>
-            <a href="culture" class="nav-link">Culture générale</a>
+            <a href="/pommefolio/home" class="nav-link">Accueil</a>
+            <a href="/pommefolio/but" class="nav-link">BUT Informatique</a>
+            <a href="/pommefolio/culture" class="nav-link">Culture générale</a>
 
             <?php if (!empty($_SESSION['user_id'])): ?>
-                <a href="admin" class="nav-link nav-link-panel">Panel</a>
+                <a href="/pommefolio/admin" class="nav-link nav-link-panel">Panel</a>
             <?php endif; ?>
         </nav>
 

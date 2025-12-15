@@ -1,4 +1,5 @@
-<?php require __DIR__ . '/../partials/header.php'; ?>
+<?php require __DIR__ . "/../partials/layout_head.php";
+require __DIR__ . '/../partials/header.php'; ?>
 <main class="page page-admin-competences">
     <section class="page-header">
         <h1>Compétences BUT</h1>

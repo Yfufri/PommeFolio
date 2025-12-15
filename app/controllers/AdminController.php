@@ -34,6 +34,8 @@ class AdminController extends BaseController
         ]);
     }
 
+
+
     /* -------- Compétences -------- */
 
     public function competencesList(): void

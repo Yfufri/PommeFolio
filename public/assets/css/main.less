@@ -668,6 +668,87 @@ body {
     color: @color-accent-2;
   }
 }
+/* ===============================
+   Admin Dashboard
+   =============================== */
+
+.page-admin {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  margin-bottom: 2.5rem;
+
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  p {
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-card {
+  position: relative;
+  border-radius: 18px;
+  padding: 2rem 1.8rem;
+  .surface-blur();
+  box-shadow: @shadow-soft;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 180px;
+  .hover-lift();
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Gradient d'arrière-plan alternant */
+  &:nth-child(odd)::before {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    .gradient-card();
+    opacity: 0.6;
+    pointer-events: none;
+    filter: blur(18px);
+    z-index: -1;
+  }
+
+  &:nth-child(even)::before {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    .gradient-card-alt();
+    opacity: 0.6;
+    pointer-events: none;
+    filter: blur(18px);
+    z-index: -1;
+  }
+}
 
 /* ===============================
    Admin : table / forms

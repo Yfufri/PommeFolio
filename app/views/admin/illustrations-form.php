@@ -1,3 +1,4 @@
+<?php require __DIR__ . "/../partials/layout_head.php"; ?>
 <?php require __DIR__ . '/../partials/header.php'; ?>
 <main class="page page-admin-illustrations">
     <section class="page-header">
