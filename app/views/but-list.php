@@ -11,9 +11,8 @@
 
     <section id="but-explorer"
              class="but-explorer"
-             data-annees='<?= json_encode($annees, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>'
-             data-acs='<?= json_encode($acsParCompetence, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>'>
-        <!-- VueJS montera ici et remplacera ce contenu -->
+             data-annees="<?= htmlspecialchars(json_encode($annees, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>"
+             data-acs="<?= htmlspecialchars(json_encode($acsParCompetence, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') ?>">
         <p>Chargement de l’explorateur...</p>
     </section>
 </main>

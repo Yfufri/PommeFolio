@@ -81,19 +81,19 @@ switch ($action) {
         (new AdminController())->competencesManage();
         break;
 
-    case 'admin-ac-create':
+    case 'admin-acs-create':
         (new AdminController())->acCreateForm();
         break;
-    case 'admin-ac-store':
+    case 'admin-acs-store':
         (new AdminController())->acStore();
         break;
-    case 'admin-ac-edit':
+    case 'admin-acs-edit':
         (new AdminController())->acEditForm();
         break;
-    case 'admin-ac-update':
+    case 'admin-acs-update':
         (new AdminController())->acUpdate();
         break;
-    case 'admin-ac-delete':
+    case 'admin-acs-delete':
         (new AdminController())->acDelete();
         break;
 

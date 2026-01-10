@@ -3,7 +3,7 @@ require __DIR__ . '/../partials/header.php'; ?>
 <main class="page page-admin-competences">
     <section class="page-header">
         <h1>Compétences BUT</h1>
-        <a href="/admin/competences/create" class="btn btn-primary">Ajouter une compétence</a>
+        <a href="competences/create" class="btn btn-primary">Ajouter une compétence</a>
     </section>
 
     <section class="table-wrapper">
@@ -23,13 +23,13 @@ require __DIR__ . '/../partials/header.php'; ?>
                     <td><?= htmlspecialchars($comp['code']) ?></td>
                     <td><?= htmlspecialchars($comp['titre']) ?></td>
                     <td class="table-actions">
-                        <a href="/admin/competences/edit?id=<?= (int)$comp['id'] ?>" class="btn btn-small">Modifier</a>
-                        <a href="/admin/competences/delete?id=<?= (int)$comp['id'] ?>"
+                        <a href="competences/edit?id=<?= (int)$comp['id'] ?>" class="btn btn-small">Modifier</a>
+                        <a href="competences/delete?id=<?= (int)$comp['id'] ?>"
                            class="btn btn-small btn-danger"
                            onclick="return confirm('Supprimer cette compétence ?');">
                             Supprimer
                         </a>
-                        <a href="/admin/competences/manage?id=<?= (int)$comp['id'] ?>"
+                        <a href="competences/manage?id=<?= (int)$comp['id'] ?>"
                            class="btn btn-small btn-secondary">
                             AC & Illustrations
                         </a>

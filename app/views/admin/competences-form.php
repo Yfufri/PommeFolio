@@ -6,7 +6,7 @@
     </section>
 
     <section class="form-wrapper">
-        <form action="<?= $mode === 'edit' ? '/admin/competences/update' : '/admin/competences/store' ?>"
+        <form action="<?= $mode === 'edit' ? 'update' : 'store' ?>"
               method="post" class="form">
             <?php if ($mode === 'edit'): ?>
                 <input type="hidden" name="id" value="<?= (int)$competence['id'] ?>">

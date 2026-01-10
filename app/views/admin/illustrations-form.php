@@ -10,7 +10,7 @@
 
     <section class="form-wrapper">
         <h2>Ajouter une illustration</h2>
-        <form action="/admin/illustrations/store" method="post" enctype="multipart/form-data" class="form">
+        <form action="illustrations/store" method="post" enctype="multipart/form-data" class="form">
             <input type="hidden" name="competence_id" value="<?= (int)$competence['id'] ?>">
 
             <div class="form-group">
@@ -88,7 +88,7 @@
                     </td>
                     <td><?= htmlspecialchars($illu['path']) ?></td>
                     <td class="table-actions">
-                        <a href="/admin/illustrations/delete?id=<?= (int)$illu['id'] ?>"
+                        <a href="illustrations/delete?id=<?= (int)$illu['id'] ?>"
                            class="btn btn-small btn-danger"
                            onclick="return confirm('Supprimer cette illustration ?');">
                             Supprimer

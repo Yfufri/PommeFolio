@@ -66,7 +66,7 @@ class AdminController extends BaseController
         $this->requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/admin/competences');
+            $this->redirect('../competences');
         }
 
         $data = [
@@ -78,7 +78,7 @@ class AdminController extends BaseController
 
         $this->competenceModel->create($data);
 
-        $this->redirect('/admin/competences');
+        $this->redirect('../competences');
     }
 
     public function competencesEditForm(): void
@@ -107,7 +107,7 @@ class AdminController extends BaseController
         $this->requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/admin/competences');
+            $this->redirect('../competences');
         }
 
         $id = (int) ($_POST['id'] ?? 0);
@@ -121,7 +121,7 @@ class AdminController extends BaseController
 
         $this->competenceModel->update($id, $data);
 
-        $this->redirect('/admin/competences');
+        $this->redirect('../competences');
     }
 
     public function competencesDelete(): void
@@ -133,7 +133,7 @@ class AdminController extends BaseController
             $this->competenceModel->delete($id);
         }
 
-        $this->redirect('/admin/competences');
+        $this->redirect('../competences');
     }
 
     // Gérer une compétence (AC + illustrations)
@@ -183,7 +183,7 @@ class AdminController extends BaseController
         $this->requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/admin/competences');
+            $this->redirect('competences');
         }
 
         $data = [
@@ -195,7 +195,7 @@ class AdminController extends BaseController
 
         $this->acModel->create($data);
 
-        $this->redirect('/admin/competences/manage?id=' . $data['competence_id']);
+        $this->redirect('../competences/manage?id=' . $data['competence_id']);
     }
 
     public function acEditForm(): void
@@ -224,7 +224,7 @@ class AdminController extends BaseController
         $this->requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/admin/competences');
+            $this->redirect('../admin/competences');
         }
 
         $id = (int) ($_POST['id'] ?? 0);
@@ -238,10 +238,10 @@ class AdminController extends BaseController
         $ac = $this->acModel->findById($id);
         if ($ac) {
             $this->acModel->update($id, $data);
-            $this->redirect('/admin/competences/manage?id=' . (int) $ac['competence_id']);
+            $this->redirect('../admin/competences/manage?id=' . (int) $ac['competence_id']);
         }
 
-        $this->redirect('/admin/competences');
+        $this->redirect('../admin/competences');
     }
 
     public function acDelete(): void
@@ -254,10 +254,10 @@ class AdminController extends BaseController
         if ($ac) {
             $competenceId = (int) $ac['competence_id'];
             $this->acModel->delete($id);
-            $this->redirect('/admin/competences/manage?id=' . $competenceId);
+            $this->redirect('../competences/manage?id=' . $competenceId);
         }
 
-        $this->redirect('/admin/competences');
+        $this->redirect('../competences');
     }
 
     /* -------- Illustrations -------- */
@@ -323,7 +323,7 @@ class AdminController extends BaseController
         }
 
         if ($path === '') {
-            $this->redirect('/admin/illustrations?competence_id=' . $competenceId);
+            $this->redirect('../illustrations?competence_id=' . $competenceId);
         }
 
         $this->illustrationModel->create([
@@ -334,7 +334,7 @@ class AdminController extends BaseController
             'titre'         => $titre,
         ]);
 
-        $this->redirect('/admin/illustrations?competence_id=' . $competenceId);
+        $this->redirect('../illustrations?competence_id=' . $competenceId);
     }
 
     public function illustrationsDelete(): void
@@ -347,9 +347,9 @@ class AdminController extends BaseController
         if ($illu) {
             $competenceId = (int) $illu['competence_id'];
             $this->illustrationModel->delete($id);
-            $this->redirect('/admin/illustrations?competence_id=' . $competenceId);
+            $this->redirect('../illustrations?competence_id=' . $competenceId);
         }
 
-        $this->redirect('/admin');
+        $this->redirect('../illustrations?competence_id=' . $competenceId);
     }
 }

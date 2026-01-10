@@ -31,7 +31,8 @@ class ButController extends BaseController
         foreach ($annees as $annee) {
             if (!empty($annee['competences'])) {
                 foreach ($annee['competences'] as $comp) {
-                    $acsParCompetence[$comp['id']] = $this->acModel->findByCompetence($comp['id']);
+                    $data = $this->acModel->findByCompetence($comp['id']);
+                    $acsParCompetence[(string)$comp['id']] = $data ?: [];
                 }
             }
         }

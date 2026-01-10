@@ -28,11 +28,11 @@
     RewriteRule ^admin/competences/delete$     index.php?action=admin-competences-delete      [QSA,L]
     RewriteRule ^admin/competences/manage$     index.php?action=admin-competences-manage      [QSA,L]
 
-    RewriteRule ^admin/ac/create$              index.php?action=admin-ac-create               [QSA,L]
-    RewriteRule ^admin/ac/store$               index.php?action=admin-ac-store                [QSA,L]
-    RewriteRule ^admin/ac/edit$                index.php?action=admin-ac-edit                 [QSA,L]
-    RewriteRule ^admin/ac/update$              index.php?action=admin-ac-update               [QSA,L]
-    RewriteRule ^admin/ac/delete$              index.php?action=admin-ac-delete               [QSA,L]
+    RewriteRule ^admin/acs/create$              index.php?action=admin-acs-create               [QSA,L]
+    RewriteRule ^admin/acs/store$               index.php?action=admin-acs-store                [QSA,L]
+    RewriteRule ^admin/acs/edit$                index.php?action=admin-acs-edit                 [QSA,L]
+    RewriteRule ^admin/acs/update$              index.php?action=admin-acs-update               [QSA,L]
+    RewriteRule ^admin/acs/delete$              index.php?action=admin-acs-delete               [QSA,L]
 
     RewriteRule ^admin/illustrations$          index.php?action=admin-illustrations           [QSA,L]
     RewriteRule ^admin/illustrations/store$    index.php?action=admin-illustrations-store     [QSA,L]

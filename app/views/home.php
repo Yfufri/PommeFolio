@@ -1,6 +1,6 @@
 <?php require __DIR__ . "/partials/layout_head.php"; ?>
 <?php require __DIR__ . '/partials/header.php'; ?>
-<main class="page page-home">s
+<main class="page page-home">
     <section class="hero">
         <div class="hero-gradient"></div>
         <div class="hero-content">
@@ -20,7 +20,7 @@
     </section>
 
     <section class="cards-grid">
-        <article class="card card-big">
+        <article class="card">
             <div class="card-gradient"></div>
             <h2>BUT Informatique</h2>
             <p>
@@ -30,7 +30,7 @@
             <a href="/pommefolio/but" class="card-link">Explorer les compétences →</a>
         </article>
 
-        <article class="card card-big">
+        <article class="card">
             <div class="card-gradient alt"></div>
             <h2>Culture générale</h2>
             <p>

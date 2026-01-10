@@ -6,7 +6,7 @@
         <h1>Voyage à Paris avec la Promo</h1>
     </section>
 
-    <section class="voyage-paris-intro card-big">
+    <section class="voyage-paris-intro card">
         <div class="card-gradient alt"></div>
         <h2>Petit reportage sur ce voyage</h2>
         <p>

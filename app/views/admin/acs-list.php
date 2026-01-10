@@ -3,7 +3,7 @@
 <main class="page page-admin-acs">
     <section class="page-header">
         <h1>AC de la compétence <?= htmlspecialchars($competence['code']) ?> – <?= htmlspecialchars($competence['titre']) ?></h1>
-        <a href="/admin/acs/create?competence_id=<?= (int)$competence['id'] ?>" class="btn btn-primary">
+        <a href="../acs/create?competence_id=<?= (int)$competence['id'] ?>" class="btn btn-primary">
             Ajouter une AC
         </a>
     </section>
@@ -23,13 +23,13 @@
                     <td><?= htmlspecialchars($ac['code']) ?></td>
                     <td><?= htmlspecialchars($ac['titre']) ?></td>
                     <td class="table-actions">
-                        <a href="/admin/acs/edit?id=<?= (int)$ac['id'] ?>" class="btn btn-small">Modifier</a>
-                        <a href="/admin/acs/delete?id=<?= (int)$ac['id'] ?>"
+                        <a href="../acs/edit?id=<?= (int)$ac['id'] ?>" class="btn btn-small">Modifier</a>
+                        <a href="../acs/delete?id=<?= (int)$ac['id'] ?>"
                            class="btn btn-small btn-danger"
                            onclick="return confirm('Supprimer cette AC ?');">
                             Supprimer
                         </a>
-                        <a href="/admin/illustrations?competence_id=<?= (int)$competence['id'] ?>&ac_id=<?= (int)$ac['id'] ?>"
+                        <a href="../illustrations?competence_id=<?= (int)$competence['id'] ?>&ac_id=<?= (int)$ac['id'] ?>"
                            class="btn btn-small btn-secondary">
                             Illustrations
                         </a>

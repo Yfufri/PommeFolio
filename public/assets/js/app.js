@@ -50,13 +50,19 @@
         animatedCards.forEach((card, index) => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(12px)';
-            card.style.transition =
-                'opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1), ' +
-                'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
 
             setTimeout(() => {
                 card.style.opacity = '1';
                 card.style.transform = 'translateY(0)';
+
+                // Nettoyage pour laisser le CSS (.card:hover) reprendre la main
+                setTimeout(() => {
+                    card.style.opacity = '';
+                    card.style.transform = '';
+                    card.style.transition = '';
+                }, 500);
+
             }, 80 + index * 70);
         });
     }
@@ -89,32 +95,28 @@
             console.error('Erreur parsing BUT data', e);
         }
 
-        const { createApp, computed, ref } = Vue;
+        const { createApp, computed, ref, onMounted } = Vue;
 
         const app = createApp({
             setup() {
-                const selectedAnneeId   = ref(annees[0] ? annees[0].id : null);
+                const selectedAnneeId   = ref(null);
                 const selectedCompId    = ref(null);
                 const searchText        = ref('');
 
                 const filteredAnnees = computed(() => {
                     if (!searchText.value) return annees;
-
                     const q = searchText.value.toLowerCase();
                     return annees.map(annee => {
                         const filteredComps = (annee.competences || []).filter(c =>
                             (c.code || '').toLowerCase().includes(q) ||
                             (c.titre || '').toLowerCase().includes(q)
                         );
-                        return {
-                            ...annee,
-                            competences: filteredComps
-                        };
+                        return { ...annee, competences: filteredComps };
                     }).filter(a => a.competences.length > 0);
                 });
 
                 const currentAnnee = computed(() =>
-                    filteredAnnees.value.find(a => a.id === selectedAnneeId.value) || null
+                    annees.find(a => a.id === selectedAnneeId.value) || null
                 );
 
                 const currentCompetences = computed(() =>
@@ -126,25 +128,33 @@
                 );
 
                 const currentAcs = computed(() => {
-                    if (!currentCompetence.value) return [];
-                    const list = acsParCompetence[currentCompetence.value.id] || [];
-                    return list;
+                    if (!selectedCompId.value) return [];
+                    const idKey = String(selectedCompId.value);
+                    return acsParCompetence[idKey] || [];
                 });
 
                 function selectAnnee(id) {
                     selectedAnneeId.value = id;
-                    const a = filteredAnnees.value.find(x => x.id === id);
-                    selectedCompId.value = (a && a.competences[0]) ? a.competences[0].id : null;
+                    const annee = annees.find(x => x.id === id);
+                    if (annee && annee.competences && annee.competences.length > 0) {
+                        selectedCompId.value = annee.competences[0].id;
+                    } else {
+                        selectedCompId.value = null;
+                    }
                 }
 
                 function selectCompetence(id) {
                     selectedCompId.value = id;
                 }
 
-                // init comp sélectionnée par défaut
-                if (currentCompetences.value[0]) {
-                    selectedCompId.value = currentCompetences.value[0].id;
-                }
+                onMounted(() => {
+                    if (annees.length > 0) {
+                        selectedAnneeId.value = annees[0].id;
+                        if (annees[0].competences && annees[0].competences.length > 0) {
+                            selectedCompId.value = annees[0].competences[0].id;
+                        }
+                    }
+                });
 
                 return {
                     searchText,
@@ -160,72 +170,67 @@
                 };
             },
             template: `
-        <div class="but-explorer-inner">
-          <div class="but-explorer-sidebar card">
-            <h2>Années & compétences</h2>
-            <div class="form-group">
-              <label>Rechercher une compétence</label>
-              <input type="text" v-model="searchText" placeholder="C1, C2, système, web...">
-            </div>
+              <div class="but-explorer-inner">
+                <div class="but-explorer-sidebar card">
+                  <h2>Années & compétences</h2>
+                  <div class="form-group">
+                    <label>Rechercher une compétence</label>
+                    <input type="text" v-model="searchText" placeholder="C1, C2, système, web...">
+                  </div>
 
-            <div class="annees-list">
-              <div v-for="annee in filteredAnnees"
-                   :key="annee.id"
-                   class="annee-block">
-                <button
-                  class="annee-btn"
-                  :class="{ 'is-active': annee.id === selectedAnneeId }"
-                  @click="selectAnnee(annee.id)">
-                  {{ annee.label }}
-                </button>
+                  <div class="annees-list">
+                    <div v-for="annee in filteredAnnees" :key="annee.id" class="annee-block">
+                      <button
+                          class="annee-btn"
+                          :class="{ 'is-active': annee.id === selectedAnneeId }"
+                          @click="selectAnnee(annee.id)">
+                        {{ annee.label }}
+                      </button>
 
-                <ul class="competences-list">
-                  <li v-for="comp in annee.competences"
-                      :key="comp.id">
-                    <button
-                      class="competence-btn"
-                      :class="{ 'is-active': comp.id === selectedCompId }"
-                      @click="selectCompetence(comp.id)">
-                      <span class="code">{{ comp.code }}</span>
-                      <span class="titre">{{ comp.titre }}</span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="but-explorer-detail card-big" v-if="currentCompetence">
-            <div class="card-gradient"></div>
-            <h2>
-              {{ currentCompetence.code }} – {{ currentCompetence.titre }}
-            </h2>
-            <p class="competence-description">
-              Sélectionne une AC pour voir ce que je sais faire, ou consulte la page détaillée.
-            </p>
-
-            <div class="acs-grid">
-              <article class="ac-card" v-for="ac in currentAcs" :key="ac.id">
-                <div class="ac-header">
-                  <span class="ac-code">{{ ac.code }}</span>
-                  <h3>{{ ac.titre }}</h3>
+                      <ul class="competences-list">
+                        <li v-for="comp in annee.competences" :key="comp.id">
+                          <button
+                              class="competence-btn"
+                              :class="{ 'is-active': comp.id === selectedCompId }"
+                              @click="selectCompetence(comp.id)">
+                            <span class="code">{{ comp.code }}</span>
+                            <span class="titre">{{ comp.titre }}</span>
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <p class="ac-description">{{ ac.description }}</p>
-                <a
-                  class="btn btn-link"
-                  :href="'/but-competence?id=' + currentCompetence.id">
-                  Voir les illustrations de cette compétence →
-                </a>
-              </article>
-            </div>
-          </div>
 
-          <div v-else class="but-explorer-detail card-big">
-            <h2>Aucune compétence trouvée</h2>
-            <p>Essaie de modifier ta recherche ou de sélectionner une autre année.</p>
-          </div>
-        </div>
-      `
+                <div class="but-explorer-detail card" v-if="currentCompetence">
+                  <h2>{{ currentCompetence.code }} – {{ currentCompetence.titre }}</h2>
+                  <p class="competence-description">
+                    Sélectionne une AC pour voir les détails ou consulte la page complète.
+                  </p>
+
+                  <div class="acs-grid">
+                    <article class="ac-card" v-for="ac in currentAcs" :key="ac.id">
+                      <div class="ac-header">
+                        <span class="ac-code">{{ ac.code }}</span>
+                        <h3>{{ ac.titre }}</h3>
+                      </div>
+                      <p class="ac-description">{{ ac.description }}</p>
+                      <a class="btn btn-link" :href="'/pommefolio/but-competence?id=' + currentCompetence.id">
+                        Voir les illustrations →
+                      </a>
+                    </article>
+                  </div>
+                  <div v-if="currentAcs.length === 0" class="mt-2">
+                    <p>Aucun acquis d'apprentissage enregistré pour cette compétence.</p>
+                  </div>
+                </div>
+
+                <div v-else class="but-explorer-detail card">
+                  <h2>Aucune sélection</h2>
+                  <p>Sélectionne une compétence dans la barre latérale pour afficher les détails.</p>
+                </div>
+              </div>
+            `
         });
 
         app.mount('#but-explorer');
