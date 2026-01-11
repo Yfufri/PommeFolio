@@ -748,21 +748,36 @@ button {
 
 .ac-illustrations {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.5rem;
   margin-top: 1rem;
 }
 
+.illu-wrapper {
+  width: 100%;
+}
+
+.illu-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: @text-light-body;
+
+  .dark & { color: @text-dark; }
+}
+
 .illu-thumb {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  max-width: 600px; // Plus grande largeur
   border-radius: 8px;
   overflow: hidden;
+  background: rgba(0, 0, 0, 0.05);
 
-  img, video {
+  img video{
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;       // Hauteur automatique pour garder les proportions
+    display: block;
+    object-fit: contain; // Garantit que l'image n'est jamais coupée
   }
 }
 

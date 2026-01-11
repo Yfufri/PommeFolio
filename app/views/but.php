@@ -4,7 +4,7 @@
     <section class="breadcrumb">
         <a href="/pommefolio/home">Accueil</a>
         <span>›</span>
-        <a href="/pommefolio/home">BUT Informatique</a>
+        <a href="/pommefolio/but">BUT Informatique</a>
         <?php if (!empty($annee)): ?>
             <span>›</span><span><?= htmlspecialchars($annee['label']) ?></span>
         <?php endif; ?>
@@ -12,6 +12,8 @@
             <span>›</span><span><?= htmlspecialchars($competence['code']) ?></span>
         <?php endif; ?>
     </section>
+
+    <a href="../but" class="btn btn-secondary">Retour</a>
 
     <?php if (!empty($competence)): ?>
         <section class="competence-header">
@@ -29,9 +31,22 @@
                         <div class="illu-card">
                             <h3><?= htmlspecialchars($illu['titre'] ?? 'Illustration') ?></h3>
                             <?php if ($illu['type'] === 'image'): ?>
-                                <img src="/<?= htmlspecialchars($illu['path']) ?>" alt="">
+                                <img src="../public/<?= htmlspecialchars($illu['path']) ?>" alt="<?= htmlspecialchars($illu['titre'] ?? '') ?>">
                             <?php elseif ($illu['type'] === 'pdf'): ?>
-                                <embed src="/<?= htmlspecialchars($illu['path']) ?>" type="application/pdf" class="illu-pdf" />
+                                <div class="pdf-container">
+                                <iframe
+                                        src="../public/<?= htmlspecialchars($illu['path']) ?>#toolbar=0"
+                                        type="application/pdf"
+                                        class="illu-pdf"
+                                        width="100%"
+                                        height="500px">
+                                </iframe>
+                                <div class="pdf-fallback">
+                                    <a href="../public/<?= htmlspecialchars($illu['path']) ?>" target="_blank" class="btn btn-link">
+                                        Ouvrir le PDF dans un nouvel onglet (Plein écran) →
+                                    </a>
+                                </div>
+                                </div>
                             <?php elseif ($illu['type'] === 'video'): ?>
                                 <video controls class="illu-video">
                                     <source src="/<?= htmlspecialchars($illu['path']) ?>">
@@ -64,22 +79,26 @@
                     <?php if (!empty($illustrationsParAc[$ac['id']] ?? [])): ?>
                         <div class="ac-illustrations">
                             <?php foreach ($illustrationsParAc[$ac['id']] as $illu): ?>
-                                <div class="illu-thumb">
-                                    <?php if ($illu['type'] === 'image'): ?>
-                                        <img src="/<?= htmlspecialchars($illu['path']) ?>" alt="">
-                                    <?php elseif ($illu['type'] === 'pdf'): ?>
-                                        <a href="/<?= htmlspecialchars($illu['path']) ?>" target="_blank" class="illu-link">
-                                            Voir le PDF
-                                        </a>
-                                    <?php elseif ($illu['type'] === 'video'): ?>
-                                        <video controls class="illu-video">
-                                            <source src="/<?= htmlspecialchars($illu['path']) ?>">
-                                        </video>
-                                    <?php elseif ($illu['type'] === 'url'): ?>
-                                        <a href="<?= htmlspecialchars($illu['path']) ?>" target="_blank" class="illu-link">
-                                            Lien externe
-                                        </a>
-                                    <?php endif; ?>
+                                <div class="illu-wrapper">
+                                    <h4 class="illu-title"><?= htmlspecialchars($illu['titre'] ?? 'Illustration') ?></h4>
+
+                                    <div class="illu-thumb">
+                                        <?php if ($illu['type'] === 'image'): ?>
+                                            <img src="../public/<?= htmlspecialchars($illu['path']) ?>" alt="<?= htmlspecialchars($illu['titre'] ?? '') ?>">
+                                        <?php elseif ($illu['type'] === 'pdf'): ?>
+                                            <a href="/pommefolio/<?= htmlspecialchars($illu['path']) ?>" target="_blank" class="illu-link">
+                                                Voir le PDF
+                                            </a>
+                                        <?php elseif ($illu['type'] === 'video'): ?>
+                                            <video controls class="illu-video">
+                                                <source src="/pommefolio/<?= htmlspecialchars($illu['path']) ?>">
+                                            </video>
+                                        <?php elseif ($illu['type'] === 'url'): ?>
+                                            <a href="<?= htmlspecialchars($illu['path']) ?>" target="_blank" class="illu-link">
+                                                Lien externe
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>

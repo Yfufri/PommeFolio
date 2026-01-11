@@ -25,7 +25,7 @@ abstract class BaseController
     protected function requireLogin(): void
     {
         if (!$this->isLoggedIn()) {
-            $this->redirect('/login');
+            $this->redirect('/pommefolio/login');
         }
     }
 }

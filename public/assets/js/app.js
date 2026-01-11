@@ -215,7 +215,7 @@
                         <h3>{{ ac.titre }}</h3>
                       </div>
                       <p class="ac-description">{{ ac.description }}</p>
-                      <a class="btn btn-link" :href="'/pommefolio/but-competence?id=' + currentCompetence.id">
+                      <a class="btn btn-link" :href="'but/competence?id=' + currentCompetence.id">
                         Voir les illustrations →
                       </a>
                     </article>

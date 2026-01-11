@@ -301,29 +301,37 @@ class AdminController extends BaseController
 
         $competenceId = (int) ($_POST['competence_id'] ?? 0);
         $scope        = $_POST['scope'] ?? 'global';
-        $acId         = null;
+        $acId         = ($scope === 'ac' && !empty($_POST['ac_id'])) ? (int) $_POST['ac_id'] : null;
+        $type         = $_POST['type'] ?? 'image';
+        $titre        = trim($_POST['titre'] ?? '');
 
-        if ($scope === 'ac') {
-            $acId = !empty($_POST['ac_id']) ? (int) $_POST['ac_id'] : null;
-        }
-
-        $type  = $_POST['type'] ?? 'image';
-        $titre = trim($_POST['titre'] ?? '');
-
-        // Détermine le path depuis upload ou URL
         $path = '';
-        if (!empty($_FILES['file_upload']['name'])) {
-            $filename = basename($_FILES['file_upload']['name']);
-            $target   = 'assets/uploads/' . $filename;
-            // A compléter avec les vérifs/moves réels
-            move_uploaded_file($_FILES['file_upload']['tmp_name'], __DIR__ . '/../../public/' . $target);
-            $path = $target;
-        } elseif (!empty($_POST['url'])) {
+
+        // Gestion de l'upload
+        if (!empty($_FILES['file_upload']['name']) && $_FILES['file_upload']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = __DIR__ . '/../../public/assets/uploads/';
+
+            // Créer le dossier s'il n'existe pas
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            // Sécuriser le nom du fichier (timestamp + nom d'origine nettoyé)
+            $filename = time() . '_' . preg_replace("/[^a-zA-Z0-9.]/", "_", basename($_FILES['file_upload']['name']));
+            $targetPath = $uploadDir . $filename;
+
+            if (move_uploaded_file($_FILES['file_upload']['tmp_name'], $targetPath)) {
+                $path = 'assets/uploads/' . $filename;
+            }
+        }
+        // Si pas d'upload, on regarde si une URL est fournie
+        elseif (!empty($_POST['url'])) {
             $path = trim($_POST['url']);
         }
 
         if ($path === '') {
             $this->redirect('../illustrations?competence_id=' . $competenceId);
+            return;
         }
 
         $this->illustrationModel->create([
