@@ -86,9 +86,20 @@
                                         <?php if ($illu['type'] === 'image'): ?>
                                             <img src="../public/<?= htmlspecialchars($illu['path']) ?>" alt="<?= htmlspecialchars($illu['titre'] ?? '') ?>">
                                         <?php elseif ($illu['type'] === 'pdf'): ?>
-                                            <a href="/pommefolio/<?= htmlspecialchars($illu['path']) ?>" target="_blank" class="illu-link">
-                                                Voir le PDF
-                                            </a>
+                                            <div class="pdf-container">
+                                                <iframe
+                                                        src="../public/<?= htmlspecialchars($illu['path']) ?>#toolbar=0"
+                                                        type="application/pdf"
+                                                        class="illu-pdf"
+                                                        width="100%"
+                                                        height="500px">
+                                                </iframe>
+                                                <div class="pdf-fallback">
+                                                    <a href="../public/<?= htmlspecialchars($illu['path']) ?>" target="_blank" class="btn btn-link">
+                                                        Ouvrir le PDF dans un nouvel onglet (Plein écran) →
+                                                    </a>
+                                                </div>
+                                            </div>
                                         <?php elseif ($illu['type'] === 'video'): ?>
                                             <video controls class="illu-video">
                                                 <source src="/pommefolio/<?= htmlspecialchars($illu['path']) ?>">
