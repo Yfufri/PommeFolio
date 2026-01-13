@@ -39,5 +39,23 @@
             <a href="/pommefolio/culture" class="card-link">Découvrir mes enrichissements culturels →</a>
         </article>
     </section>
+
+    <article class="card">
+        <h2>Mon CV</h2>
+        <div class="pdf-container">
+            <iframe
+                    src="public/assets/img/CV.pdf#toolbar=0"
+                    type="application/pdf"
+                    class="illu-pdf"
+                    width="100%"
+                    height="500px">
+            </iframe>
+            <div class="pdf-fallback">
+                <a href="public/assets/img/CV.pdf" target="_blank" class="btn btn-link">
+                    Ouvrir le CV dans un nouvel onglet (Plein écran) →
+                </a>
+            </div>
+        </div>
+    </article>
 </main>
 <?php require __DIR__ . '/partials/footer.php'; ?>
