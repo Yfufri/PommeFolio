@@ -29,6 +29,7 @@ class AuthController extends BaseController
             $this->redirect('../login');
         }
 
+
         $password = $_POST['password'] ?? '';
 
         if ($password === '') {
@@ -37,7 +38,7 @@ class AuthController extends BaseController
 
         $user = $this->userModel->getUser();
 
-        if (!password_verify($password, $user['password'])) {
+        if (!password_verify($password, $_ENV['ADMIN_PASSWORD_HASH'])) {
             $this->redirect('../login?error=Identifiant%20ou%20mot%20de%20passe%20incorrect');
         }
 

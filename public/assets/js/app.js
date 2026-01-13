@@ -138,13 +138,12 @@
                     const annee = annees.find(x => x.id === id);
                     if (annee && annee.competences && annee.competences.length > 0) {
                         selectedCompId.value = annee.competences[0].id;
-                    } else {
-                        selectedCompId.value = null;
                     }
                 }
 
-                function selectCompetence(id) {
-                    selectedCompId.value = id;
+                function selectCompetence(comp, anneeId) {
+                    selectedAnneeId.value = anneeId;
+                    selectedCompId.value = comp.id;
                 }
 
                 onMounted(() => {
@@ -192,7 +191,7 @@
                           <button
                               class="competence-btn"
                               :class="{ 'is-active': comp.id === selectedCompId }"
-                              @click="selectCompetence(comp.id)">
+                              @click="selectCompetence(comp, annee.id)">
                             <span class="code">{{ comp.code }}</span>
                             <span class="titre">{{ comp.titre }}</span>
                           </button>
