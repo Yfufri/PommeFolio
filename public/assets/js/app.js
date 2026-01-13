@@ -42,6 +42,44 @@
         }
     }
 
+    function initLightbox() {
+        // 1. Créer l'élément overlay s'il n'existe pas
+        let overlay = document.querySelector('.lightbox-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.classList.add('lightbox-overlay');
+            overlay.innerHTML = '<img src="" alt="Agrandissement">';
+            document.body.appendChild(overlay);
+        }
+
+        const overlayImg = overlay.querySelector('img');
+
+        // 2. Écouter le clic sur TOUTES les images d'illustrations
+        document.addEventListener('click', (e) => {
+            const img = e.target.closest('.illu-thumb img, .illu-card img, .voyage-paris-item img');
+
+            if (img) {
+                overlayImg.src = img.src;
+                overlay.classList.add('is-active');
+                document.body.style.overflow = 'hidden'; // Bloque le scroll
+            }
+        });
+
+        // 3. Fermer au clic sur l'overlay
+        overlay.addEventListener('click', () => {
+            overlay.classList.remove('is-active');
+            document.body.style.overflow = ''; // Libère le scroll
+        });
+    }
+
+// Dans votre DOMContentLoaded final, ajoutez l'appel :
+    document.addEventListener('DOMContentLoaded', () => {
+        initDarkMode();
+        initCardAnimations();
+        initHeroParallax();
+        initButExplorerVue();
+        initLightbox(); // <--- Ajoutez ceci
+    });
     function initCardAnimations() {
         const animatedCards = document.querySelectorAll(
             '.card, .card-big, .culture-card, .ac-card, .admin-card'

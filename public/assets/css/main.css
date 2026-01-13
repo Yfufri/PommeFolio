@@ -619,6 +619,17 @@ button {
   display: block;
   object-fit: contain;
 }
+.illu-thumb img,
+.illu-card img,
+.voyage-paris-item img {
+  cursor: zoom-in;
+}
+.illu-thumb img:hover,
+.illu-card img:hover,
+.voyage-paris-item img:hover {
+  filter: brightness(0.9);
+  transition: filter 0.2s ease;
+}
 .illu-link {
   display: flex;
   align-items: center;
@@ -1255,6 +1266,43 @@ button {
 @media (max-width: 768px) {
   .but-explorer-detail {
     padding: 1.5rem;
+  }
+}
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  cursor: zoom-out;
+  backdrop-filter: blur(5px);
+}
+.lightbox-overlay.is-active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+.lightbox-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+.lightbox-overlay.is-active img {
+  transform: scale(1);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 .page-voyage-paris .voyage-paris-intro {
