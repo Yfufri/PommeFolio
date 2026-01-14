@@ -78,7 +78,8 @@
         const { createApp, computed, ref, onMounted } = Vue;
         createApp({
             setup() {
-                const selectedAnneeId = ref(null), selectedCompId = ref(null), searchText = ref('');
+                const selectedAnneeId = ref(null), selectedCompId = ref(null), searchText = ref(''), isTransitioning = ref(false);
+
                 const filteredAnnees = computed(() => {
                     if (!searchText.value) return annees;
                     const q = searchText.value.toLowerCase();
@@ -87,6 +88,7 @@
                             c.code.toLowerCase().includes(q) || c.titre.toLowerCase().includes(q))
                     })).filter(a => a.competences.length > 0);
                 });
+
                 const currentAnnee = computed(() => annees.find(a => a.id === selectedAnneeId.value));
                 const currentCompetence = computed(() => (currentAnnee.value?.competences || []).find(c => c.id === selectedCompId.value));
                 const currentAcs = computed(() => acsParComp[String(selectedCompId.value)] || []);
@@ -97,9 +99,18 @@
                     if (a?.competences?.length > 0) selectedCompId.value = a.competences[0].id;
                 };
 
+                const selectCompetence = (comp, anneeId) => {
+                    isTransitioning.value = true;
+                    setTimeout(() => {
+                        selectedAnneeId.value = anneeId;
+                        selectedCompId.value = comp.id;
+                        isTransitioning.value = false;
+                    }, 150);
+                };
+
                 onMounted(() => { if (annees.length > 0) selectAnnee(annees[0].id); });
 
-                return { searchText, filteredAnnees, selectedAnneeId, selectedCompId, currentCompetence, currentAcs, selectAnnee };
+                return { searchText, filteredAnnees, selectedAnneeId, selectedCompId, currentCompetence, currentAcs, selectAnnee, selectCompetence, isTransitioning };
             },
             template: `
               <div class="but-explorer-inner">
@@ -111,7 +122,7 @@
                       <button class="annee-btn" :class="{'is-active': a.id === selectedAnneeId}" @click="selectAnnee(a.id)">{{a.label}}</button>
                       <ul class="competences-list">
                         <li v-for="c in a.competences" :key="c.id">
-                          <button class="competence-btn" :class="{'is-active': c.id === selectedCompId}" @click="selectedCompId = c.id">
+                          <button class="competence-btn" :class="{'is-active': c.id === selectedCompId}" @click="selectCompetence(c, a.id)">
                             <span class="code">{{c.code}}</span><span class="titre">{{c.titre}}</span>
                           </button>
                         </li>
@@ -119,7 +130,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="but-explorer-detail card" v-if="currentCompetence">
+                <div class="but-explorer-detail card" :style="{ opacity: isTransitioning ? 0 : 1, transition: 'opacity 0.2s' }" v-if="currentCompetence">
                   <h2>{{currentCompetence.code}} – {{currentCompetence.titre}}</h2>
                   <div class="acs-grid">
                     <article class="ac-card" v-for="ac in currentAcs" :key="ac.id">
