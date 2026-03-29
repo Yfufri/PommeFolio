@@ -360,4 +360,105 @@ class AdminController extends BaseController
 
         $this->redirect('../illustrations?competence_id=' . $competenceId);
     }
+
+    /* -------- Culture -------- */
+
+    public function cultureList(): void
+    {
+        $this->requireLogin();
+
+        $items = $this->cultureModel->findAll();
+        $this->render('admin/culture-list', [
+            'items' => $items,
+        ]);
+    }
+
+    public function cultureCreateForm(): void
+    {
+        $this->requireLogin();
+
+        $this->render('admin/culture-form', [
+            'mode' => 'create',
+            'item' => [],
+        ]);
+    }
+
+    public function cultureStore(): void
+    {
+        $this->requireLogin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('../culture');
+        }
+
+        $dateRaw = trim($_POST['date_evenement'] ?? '');
+
+        $data = [
+            'type'           => trim($_POST['type'] ?? ''),
+            'titre'          => trim($_POST['titre'] ?? ''),
+            'description'    => trim($_POST['description'] ?? ''),
+            'date_evenement' => $dateRaw !== '' ? $dateRaw : null,
+            'lien'           => trim($_POST['lien'] ?? '') ?: null,
+            'image'          => trim($_POST['image'] ?? '') ?: null,
+        ];
+
+        $this->cultureModel->create($data);
+
+        $this->redirect('../culture');
+    }
+
+    public function cultureEditForm(): void
+    {
+        $this->requireLogin();
+
+        $id   = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        $item = $this->cultureModel->findById($id);
+
+        if (!$item) {
+            (new ErrorController())->notFound();
+            return;
+        }
+
+        $this->render('admin/culture-form', [
+            'mode' => 'edit',
+            'item' => $item,
+        ]);
+    }
+
+    public function cultureUpdate(): void
+    {
+        $this->requireLogin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('../culture');
+        }
+
+        $id      = (int) ($_POST['id'] ?? 0);
+        $dateRaw = trim($_POST['date_evenement'] ?? '');
+
+        $data = [
+            'type'           => trim($_POST['type'] ?? ''),
+            'titre'          => trim($_POST['titre'] ?? ''),
+            'description'    => trim($_POST['description'] ?? ''),
+            'date_evenement' => $dateRaw !== '' ? $dateRaw : null,
+            'lien'           => trim($_POST['lien'] ?? '') ?: null,
+            'image'          => trim($_POST['image'] ?? '') ?: null,
+        ];
+
+        $this->cultureModel->update($id, $data);
+
+        $this->redirect('../culture');
+    }
+
+    public function cultureDelete(): void
+    {
+        $this->requireLogin();
+
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+        if ($id > 0) {
+            $this->cultureModel->delete($id);
+        }
+
+        $this->redirect('../culture');
+    }
 }

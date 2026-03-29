@@ -38,6 +38,13 @@
     RewriteRule ^admin/illustrations/store$    index.php?action=admin-illustrations-store     [QSA,L]
     RewriteRule ^admin/illustrations/delete$   index.php?action=admin-illustrations-delete    [QSA,L]
 
+    RewriteRule ^admin/culture$                index.php?action=admin-culture                 [QSA,L]
+    RewriteRule ^admin/culture/create$         index.php?action=admin-culture-create          [QSA,L]
+    RewriteRule ^admin/culture/store$          index.php?action=admin-culture-store           [QSA,L]
+    RewriteRule ^admin/culture/edit$           index.php?action=admin-culture-edit            [QSA,L]
+    RewriteRule ^admin/culture/update$         index.php?action=admin-culture-update          [QSA,L]
+    RewriteRule ^admin/culture/delete$         index.php?action=admin-culture-delete          [QSA,L]
+
     RewriteRule ^voyage-paris$      index.php?action=voyage-paris [QSA,L]
 
 </IfModule>

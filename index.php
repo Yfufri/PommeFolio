@@ -107,6 +107,25 @@ switch ($action) {
         (new AdminController())->illustrationsDelete();
         break;
 
+    case 'admin-culture':
+        (new AdminController())->cultureList();
+        break;
+    case 'admin-culture-create':
+        (new AdminController())->cultureCreateForm();
+        break;
+    case 'admin-culture-store':
+        (new AdminController())->cultureStore();
+        break;
+    case 'admin-culture-edit':
+        (new AdminController())->cultureEditForm();
+        break;
+    case 'admin-culture-update':
+        (new AdminController())->cultureUpdate();
+        break;
+    case 'admin-culture-delete':
+        (new AdminController())->cultureDelete();
+        break;
+
     default:
         (new ErrorController())->notFound();
         break;
