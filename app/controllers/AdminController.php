@@ -383,6 +383,21 @@ class AdminController extends BaseController
         ]);
     }
 
+    private function handleCultureImageUpload(string $fallback): ?string
+    {
+        if (!empty($_FILES['file_upload']['name']) && $_FILES['file_upload']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = __DIR__ . '/../../uploads/culture/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0775, true);
+            }
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9.]/', '_', basename($_FILES['file_upload']['name']));
+            if (move_uploaded_file($_FILES['file_upload']['tmp_name'], $uploadDir . $filename)) {
+                return 'uploads/culture/' . $filename;
+            }
+        }
+        return $fallback !== '' ? $fallback : null;
+    }
+
     public function cultureStore(): void
     {
         $this->requireLogin();
@@ -392,6 +407,7 @@ class AdminController extends BaseController
         }
 
         $dateRaw = trim($_POST['date_evenement'] ?? '');
+        $image   = $this->handleCultureImageUpload(trim($_POST['image_path'] ?? ''));
 
         $data = [
             'type'           => trim($_POST['type'] ?? ''),
@@ -399,7 +415,7 @@ class AdminController extends BaseController
             'description'    => trim($_POST['description'] ?? ''),
             'date_evenement' => $dateRaw !== '' ? $dateRaw : null,
             'lien'           => trim($_POST['lien'] ?? '') ?: null,
-            'image'          => trim($_POST['image'] ?? '') ?: null,
+            'image'          => $image,
         ];
 
         $this->cultureModel->create($data);
@@ -435,6 +451,7 @@ class AdminController extends BaseController
 
         $id      = (int) ($_POST['id'] ?? 0);
         $dateRaw = trim($_POST['date_evenement'] ?? '');
+        $image   = $this->handleCultureImageUpload(trim($_POST['image_path'] ?? ''));
 
         $data = [
             'type'           => trim($_POST['type'] ?? ''),
@@ -442,7 +459,7 @@ class AdminController extends BaseController
             'description'    => trim($_POST['description'] ?? ''),
             'date_evenement' => $dateRaw !== '' ? $dateRaw : null,
             'lien'           => trim($_POST['lien'] ?? '') ?: null,
-            'image'          => trim($_POST['image'] ?? '') ?: null,
+            'image'          => $image,
         ];
 
         $this->cultureModel->update($id, $data);

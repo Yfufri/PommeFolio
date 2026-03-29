@@ -7,7 +7,7 @@
 
     <section class="form-wrapper">
         <form action="<?= $mode === 'edit' ? 'update' : 'store' ?>"
-              method="post" class="form">
+              method="post" enctype="multipart/form-data" class="form">
             <?php if ($mode === 'edit'): ?>
                 <input type="hidden" name="id" value="<?= (int)$item['id'] ?>">
             <?php endif; ?>
@@ -43,10 +43,15 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Chemin de l'image (optionnel)</label>
-                <input type="text" id="image" name="image"
-                       placeholder="ex : uploads/culture/photo.jpg"
-                       value="<?= htmlspecialchars($item['image'] ?? '') ?>">
+                <label>Image</label>
+                <?php if (!empty($item['image'])): ?>
+                    <p class="form-hint">Image actuelle : <code><?= htmlspecialchars($item['image']) ?></code></p>
+                <?php endif; ?>
+                <p class="form-hint">Uploade un fichier <strong>ou</strong> colle un chemin existant.</p>
+                <input type="file" name="file_upload" accept="image/*" class="input-file">
+                <p class="form-or">ou</p>
+                <input type="text" name="image_path" placeholder="ex : uploads/culture/photo.jpg"
+                       value="<?= htmlspecialchars($item['image'] ?? '') ?>" class="input-text">
             </div>
 
             <button type="submit" class="btn btn-primary">
