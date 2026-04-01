@@ -13,7 +13,7 @@
         <?php endif; ?>
     </section>
 
-    <a href="../but" class="btn btn-secondary">Retour</a>
+    <a href="../but<?= !empty($competence) ? '?comp=' . (int)$competence['id'] : '' ?>" class="btn btn-secondary">← Retour</a>
 
     <?php if (!empty($competence)): ?>
         <section class="competence-header">

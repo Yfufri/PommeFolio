@@ -1169,40 +1169,41 @@ button {
 .but-explorer-sidebar .form-group input {
   width: 100%;
 }
-.annees-list {
+.annee-tabs {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
-.annee-block .annee-btn {
-  width: 100%;
-  padding: 0.8rem 1.2rem;
+.annee-tab {
+  flex: 1;
+  padding: 0.65rem 1rem;
   background: rgba(121, 0, 255, 0.1);
   color: #47167d;
   border-radius: 8px;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.dark .annee-block .annee-btn {
+.dark .annee-tab {
   background: rgba(121, 0, 255, 0.2);
   color: #ffffff;
 }
-.annee-block .annee-btn.is-active {
+.annee-tab.is-active {
   background: linear-gradient(135deg, #7900ff 0%, #38b6ff 100%);
   color: #ffffff;
 }
-.dark .annee-block .annee-btn.is-active {
+.dark .annee-tab.is-active {
   background: linear-gradient(135deg, #1a0033 0%, #0f1729 100%);
 }
-.annee-block .annee-btn:hover {
-  transform: translateX(4px);
+.annee-tab:hover:not(.is-active) {
+  background: rgba(121, 0, 255, 0.18);
+  transform: translateY(-2px);
 }
 .competences-list {
   list-style: none;
-  margin-top: 0.5rem;
-  padding-left: 0.5rem;
+  margin-top: 0;
+  padding-left: 0;
 }
 .competences-list li {
   margin-top: 0.5rem;
