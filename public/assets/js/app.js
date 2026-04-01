@@ -80,18 +80,21 @@
             setup() {
                 const selectedAnneeId = ref(null), selectedCompId = ref(null), searchText = ref(''), isTransitioning = ref(false);
 
-                const filteredAnnees = computed(() => {
-                    if (!searchText.value) return annees;
-                    const q = searchText.value.toLowerCase();
-                    return annees.map(a => ({
-                        ...a, competences: (a.competences || []).filter(c =>
-                            c.code.toLowerCase().includes(q) || c.titre.toLowerCase().includes(q))
-                    })).filter(a => a.competences.length > 0);
-                });
-
                 const currentAnnee = computed(() => annees.find(a => a.id === selectedAnneeId.value));
                 const currentCompetence = computed(() => (currentAnnee.value?.competences || []).find(c => c.id === selectedCompId.value));
                 const currentAcs = computed(() => acsParComp[String(selectedCompId.value)] || []);
+
+                const currentFilteredCompetences = computed(() => {
+                    const a = annees.find(x => x.id === selectedAnneeId.value);
+                    if (!a) return [];
+                    if (!searchText.value) return a.competences || [];
+                    const q = searchText.value.toLowerCase();
+                    return (a.competences || []).filter(c =>
+                        c.code.toLowerCase().includes(q) || c.titre.toLowerCase().includes(q));
+                });
+
+                // keep filteredAnnees for search compatibility (used in tab visibility)
+                const filteredAnnees = computed(() => annees);
 
                 const selectAnnee = (id) => {
                     selectedAnneeId.value = id;
@@ -108,27 +111,35 @@
                     }, 150);
                 };
 
-                onMounted(() => { if (annees.length > 0) selectAnnee(annees[0].id); });
+                onMounted(() => {
+                    const params = new URLSearchParams(window.location.search);
+                    const compIdStr = params.get('comp');
+                    if (compIdStr) {
+                        const compId = parseInt(compIdStr);
+                        for (const a of annees) {
+                            const c = (a.competences || []).find(x => x.id === compId);
+                            if (c) { selectedAnneeId.value = a.id; selectedCompId.value = compId; return; }
+                        }
+                    }
+                    if (annees.length > 0) selectAnnee(annees[0].id);
+                });
 
-                return { searchText, filteredAnnees, selectedAnneeId, selectedCompId, currentCompetence, currentAcs, selectAnnee, selectCompetence, isTransitioning };
+                return { searchText, filteredAnnees, selectedAnneeId, selectedCompId, currentCompetence, currentAcs, currentFilteredCompetences, selectAnnee, selectCompetence, isTransitioning };
             },
             template: `
               <div class="but-explorer-inner">
                 <div class="but-explorer-sidebar card">
-                  <h2>Années & compétences</h2>
-                  <div class="form-group"><input type="text" v-model="searchText" placeholder="Rechercher..."></div>
-                  <div class="annees-list">
-                    <div v-for="a in filteredAnnees" :key="a.id" class="annee-block">
-                      <button class="annee-btn" :class="{'is-active': a.id === selectedAnneeId}" @click="selectAnnee(a.id)">{{a.label}}</button>
-                      <ul class="competences-list">
-                        <li v-for="c in a.competences" :key="c.id">
-                          <button class="competence-btn" :class="{'is-active': c.id === selectedCompId}" @click="selectCompetence(c, a.id)">
-                            <span class="code">{{c.code}}</span><span class="titre">{{c.titre}}</span>
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
+                  <div class="annee-tabs">
+                    <button v-for="a in filteredAnnees" :key="a.id" class="annee-tab" :class="{'is-active': a.id === selectedAnneeId}" @click="selectAnnee(a.id)">{{a.label}}</button>
                   </div>
+                  <div class="form-group"><input type="text" v-model="searchText" placeholder="Rechercher..."></div>
+                  <ul class="competences-list">
+                    <li v-for="c in currentFilteredCompetences" :key="c.id">
+                      <button class="competence-btn" :class="{'is-active': c.id === selectedCompId}" @click="selectCompetence(c, selectedAnneeId)">
+                        <span class="code">{{c.code}}</span><span class="titre">{{c.titre}}</span>
+                      </button>
+                    </li>
+                  </ul>
                 </div>
                 <div class="but-explorer-detail card" :style="{ opacity: isTransitioning ? 0 : 1, transition: 'opacity 0.2s' }" v-if="currentCompetence">
                   <h2>{{currentCompetence.code}} – {{currentCompetence.titre}}</h2>
